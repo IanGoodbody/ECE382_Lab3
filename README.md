@@ -1,4 +1,4 @@
-### Lab 3, LCD Interfacing
+## Lab 3, LCD Interfacing
 
 #### PreLab
 
