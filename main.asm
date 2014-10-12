@@ -119,8 +119,9 @@ leftReleased:
 	jz		leftReleased
 	cmp		#ROW_COL_MIN, R11
 	jz		upPressed
-	mov		#clr_pattern, R14
-	call	#drawPattern
+	mov		#0x00, R14
+	add		#0x07, R13					; Select the last column in the image
+	call	#drawOffCol					; Clear that column
 	dec		R11
 	mov		R11, R13
 	mov		#pattern, R14
@@ -135,8 +136,8 @@ rightReleased:
 	jz		rightReleased
 	cmp		#COL_MAX, R11
 	jz		upPressed
-	mov		#clr_pattern, R14
-	call	#drawPattern
+	mov		#0x00, R14
+	call	#drawOffCol
 	inc		R11
 	mov		R11, R13
 	mov		#pattern, R14
