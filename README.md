@@ -29,6 +29,24 @@ The B and functionalities required that the MSP430 write a 8X8 block to the LCD
 screen for the B functionality and for that block to move around the screen
 in response to button presses for the A functionality.
 
+##### Write Modes
+
+An alternate method for writing data to the LCD screen, as opposed to simply
+overwring the entire screen (which would require storing more data bits in RAM 
+than there is available), is to use certain "write modes" to read write only
+the data that needs to be changed.
+
+Example mappings of these write modes are shown below.
+
+![AltText]("https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/bitblock.bmp")
+
+Unfortunately, the designer was unable to find any write mode setting commands 
+inherant in the LCD microcontroller codes. It would be possible to save 
+the pertinant data in RAM and modify it using these write modes using the 
+MSP430 commands. The `xor` option proves particularly attractive because the 
+overwriting method would only require that the bits that need to be changed be 
+written to the saved data.
+
 ##### B Functionality
 
 B functionality was fairly easily achieved without adding any extra subroutines
