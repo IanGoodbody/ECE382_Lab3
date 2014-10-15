@@ -1,9 +1,9 @@
 ;-------------------------------------------------------------------------------
-;	Chris Coulston
-;	Fall 2014
+;	C2C Ian Goodbody
+;	Lab 3: LCD Interfacing
 ;	MSP430G2553
-;	Draw a new vertical bar on the Nokia 1202 display everytime that SW3
-;	is pressed and released.
+;
+;	Draws a variety of images to a Nokia 1202 LCD screen. 
 ;-------------------------------------------------------------------------------
 	.cdecls C,LIST,"msp430.h"		; BOILERPLATE	Include device header file
 
