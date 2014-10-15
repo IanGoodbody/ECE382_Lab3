@@ -71,78 +71,77 @@ main:
 
 ;	mov		#0x14, R10
 ;	mov		#0x14, R11
+;	mov		R10, R12
+;	mov		R11, R13
+;	mov		#pattern, R14
+;	mov		#pattern_ln, R15
+;	call 	#drawPattern
 
-	mov		R10, R12
-	mov		R11, R13
-	mov		#pattern, R14
-	mov		#pattern_ln, R15
-	call 	#drawPattern
-
-upPressed:
-	bit.b	#BIT5, &P2IN
-	jnz		downPressed
-upReleased:
-	bit.b	#BIT5, &P2IN
-	jz		upReleased
-	cmp		#ROW_COL_MIN, R10
-	jz		upPressed
-	mov		#clr_pattern, R14
-	call	#drawPattern
-	dec		R10
-	mov		R10, R12
-	mov		#pattern, R14
-	call	#drawPattern
-	jmp		upPressed
+;upPressed:
+;	bit.b	#BIT5, &P2IN
+;	jnz		downPressed
+;upReleased:
+;	bit.b	#BIT5, &P2IN
+;	jz		upReleased
+;	cmp		#ROW_COL_MIN, R10
+;	jz		upPressed
+;	mov		#clr_pattern, R14
+;	call	#drawPattern
+;	dec		R10
+;	mov		R10, R12
+;	mov		#pattern, R14
+;	call	#drawPattern
+;	jmp		upPressed
 
 
-downPressed:
-	bit.b	#BIT4, &P2IN
-	jnz		leftPressed
-downReleased:
-	bit.b	#BIT4, &P2IN
-	jz 		downReleased
-	cmp		#ROW_MAX, R10
-	jz		upPressed
-	mov		#clr_pattern, R14
-	call	#drawPattern
-	inc		R10
-	mov		R10, R12
-	mov		#pattern, R14
-	call	#drawPattern
-	jmp		upPressed
+;downPressed:
+;	bit.b	#BIT4, &P2IN
+;	jnz		leftPressed
+;downReleased:
+;	bit.b	#BIT4, &P2IN
+;	jz 		downReleased
+;	cmp		#ROW_MAX, R10
+;	jz		upPressed
+;	mov		#clr_pattern, R14
+;	call	#drawPattern
+;	inc		R10
+;	mov		R10, R12
+;	mov		#pattern, R14
+;	call	#drawPattern
+;	jmp		upPressed
 
-leftPressed:
-	bit.b	#BIT2, &P2IN
-	jnz		rightPressed
-leftReleased:
-	bit.b	#BIT2, &P2IN
-	jz		leftReleased
-	cmp		#ROW_COL_MIN, R11
-	jz		upPressed
-	mov		#0x00, R14
-	add		#0x07, R13					; Select the last column in the image
-	call	#drawOffCol					; Clear that column
-	dec		R11
-	mov		R11, R13
-	mov		#pattern, R14
-	call	#drawPattern
-	jmp		upPressed
+;leftPressed:
+;	bit.b	#BIT2, &P2IN
+;	jnz		rightPressed
+;leftReleased:
+;	bit.b	#BIT2, &P2IN
+;	jz		leftReleased
+;	cmp		#ROW_COL_MIN, R11
+;	jz		upPressed
+;	mov		#0x00, R14
+;	add		#0x07, R13					; Select the last column in the image
+;	call	#drawOffCol					; Clear that column
+;	dec		R11
+;	mov		R11, R13
+;	mov		#pattern, R14
+;	call	#drawPattern
+;	jmp		upPressed
 
-rightPressed:
-	bit.b	#BIT1, &P2IN
-	jnz		upPressed
-rightReleased:
-	bit.b	#BIT1, &P2IN
-	jz		rightReleased
-	cmp		#COL_MAX, R11
-	jz		upPressed
-	mov		#0x00, R14
-	call	#drawOffCol
-	inc		R11
-	mov		R11, R13
-	mov		#pattern, R14
-	call	#drawPattern
-	jmp		upPressed
+;rightPressed:
+;	bit.b	#BIT1, &P2IN
+;	jnz		upPressed
+;rightReleased:
+;	bit.b	#BIT1, &P2IN
+;	jz		rightReleased
+;	cmp		#COL_MAX, R11
+;	jz		upPressed
+;	mov		#0x00, R14
+;	call	#drawOffCol
+;	inc		R11
+;	mov		R11, R13
+;	mov		#pattern, R14
+;	call	#drawPattern
+;	jmp		upPressed
 
 ; end A functionality
 ;--------------------------------------------------------------
@@ -155,16 +154,16 @@ while0:
 	jz		while0						; Yes, branch back and wait
 ;-----------------------------------------------------------------------
 ; Start Basic Functionality
-;	mov		#NOKIA_DATA, R12			; For testing just draw an 8 pixel high;\
-;	mov		#0xE7, R13					; beam with a 2 pixel hole in the center
-;	call	#writeNokiaByte
-;
-;	inc		R10							; since rows are 8 times bigger than columns
-;	and.w	#0x07, R10					; wrap over the row mod 8
-;	inc		R11							; just let the columm overflow after 92 buttons
-;	mov		R10, R12					; increment the row
-;	mov		R11, R13					; and column of the next beam
-;	call	#setAddress					; we draw
+	mov		#NOKIA_DATA, R12			; For testing just draw an 8 pixel high
+	mov		#0xE7, R13					; beam with a 2 pixel hole in the center
+	call	#writeNokiaByte
+
+	inc		R10							; since rows are 8 times bigger than columns
+	and.w	#0x07, R10					; wrap over the row mod 8
+	inc		R11							; just let the columm overflow after 92 buttons
+	mov		R10, R12					; increment the row
+	mov		R11, R13					; and column of the next beam
+	call	#setAddress					; we draw
 ; End Basic Functionality
 ;------------------------------------------------------------------------
 ;

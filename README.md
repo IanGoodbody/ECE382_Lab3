@@ -17,11 +17,61 @@ X indicates the particular address bits that change from call to call, these
 two bits are passed to the subroutine as R13.
 
 Every time the button is pressed and the `#writeNokiaByte` subroutine is called,
-the MOSI pin sends a SPI command to the LCD. These commands and their contens 
-are sumarized below.
+the MOSI pin sends a SPI command to the LCD. The signals were read using a 
+logic analizer. For this test probe 0 was attached to pin P1.0 to read the MOSI
+output, probe 1 was attached to pin P1.5 to read the clock, and probe 3 was 
+attached to pin P1.7 to read the MOSI output. The trigger was set to the 
+falling edge of the "component select low" pinEach of these subroutine calls
+and the data packet are summarized below.
 
 |Line|Command/Data|8-bit packet|
-|
+|:-:|:-:|:-:|:-:|
+|70 (159)|Data|1110 0111|
+|280(500)|Command|1011 0001|
+|292(512)|Command|0001 0000|
+|298 (518)|Command|0000 0001|
+
+* Line numbers in parentheses are where the routines were called after the 
+functionlaity code had been added
+
+These four bites represet the first time the S3 button was pressed and produced 
+an output. The first written byte was the data which wrote the broken bar 
+design to the display. The next three command bytes wite the address. The first 
+byte shown in the table the row address, incremented to 1. The second two bytes 
+represent the upper and lower bits of the colunm address respectively which has 
+also been incremented to 1 in the code. Below are the screenshots of the logic 
+analizer output that produced these four codes.
+
+Data Write
+![alt text]()
+
+Row Set
+![alt text]()
+
+ColumnSet
+![alt text]()
+![alt text]()
+
+In order to read the reset data pin, probe 3 was attached to pin 2.0, the reset
+signal, and the trigger was set to read at the falling edge of that reset 
+signal. The reset was read by pressing the hardware reset button S1 on the 
+MSP430. The waveform is displayed below:
+
+![alt text]()
+
+The code writes `0` to the reset pin inside the `#initNokia` subroutine which
+hods the low value to the pin for count of 0xFFFF or 65535. Analyzing the logic 
+analyzer output shows that the reset is held down for about 146.9 ms which translates to about 2.24 us per cycle of the reset loop shown below.
+
+```assembly
+	bic.b	#LCD1202_RESET_PIN, &P2OUT
+	mov	#0xFFFF, R12
+delayNokiaResetHigh:
+	dec	R12
+	jne	delayNokiaResetHigh
+	; This loop creates a nice delay for the reset high pulse
+	bis.b	#LCD1202_RESET_PIN, &P2OUT
+```
 
 #### Increased functionality
 
@@ -38,7 +88,7 @@ the data that needs to be changed.
 
 Example mappings of these write modes are shown below.
 
-![AltText]("https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/bitblock.bmp")
+![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/bitblock.bmp)
 
 Unfortunately, the designer was unable to find any write mode setting commands 
 inherant in the LCD microcontroller codes. It would be possible to save 
