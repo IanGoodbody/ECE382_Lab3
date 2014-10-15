@@ -60,8 +60,13 @@ MSP430. The waveform is displayed below:
 ![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBreset1.png)
 
 The code writes `0` to the reset pin inside the `#initNokia` subroutine which
-hods the low value to the pin for count of 0xFFFF or 65535. Analyzing the logic 
-analyzer output shows that the reset is held down for about 146.9 ms which translates to about 2.24 us per cycle of the reset loop shown below.
+holds the low value to the pin for count of 0xFFFF or 65535. The logic 
+analyzer readout of this section, on the scale shown above, shows a high 
+"blip" in the reset signal, followed by a longer low signal, then followed 
+by a similarly long high signal where the board is not reset. This pattern 
+matches the code in `initNokia` which has consecutive reset low then high 
+signals set to a loop. Measuring between the blip and the long high period 
+gave a period of 19.77 ms, and given 65,535 cycles of the loop, yields about 0.3 us per loop of the code segment shown below.
 
 ```Assembly
 	bic.b	#LCD1202_RESET_PIN, &P2OUT
