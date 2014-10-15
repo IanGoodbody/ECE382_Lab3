@@ -26,7 +26,7 @@ and the data packet are summarized below.
 
 |Line|Command/Data|8-bit packet|
 |:-:|:-:|:-:|:-:|
-|70 (159)|Data|1110 0111|
+|70 (159)*|Data|1110 0111|
 |280(500)|Command|1011 0001|
 |292(512)|Command|0001 0000|
 |298 (518)|Command|0000 0001|
@@ -43,27 +43,27 @@ also been incremented to 1 in the code. Below are the screenshots of the logic
 analizer output that produced these four codes.
 
 Data Write
-![alt text]()
+![alt text](https//raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBdata.png)
 
 Row Set
-![alt text]()
+![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBcmd1.png)
 
 ColumnSet
-![alt text]()
-![alt text]()
+![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBcmd2.png)
+![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBcmd2.png)
 
 In order to read the reset data pin, probe 3 was attached to pin 2.0, the reset
 signal, and the trigger was set to read at the falling edge of that reset 
 signal. The reset was read by pressing the hardware reset button S1 on the 
 MSP430. The waveform is displayed below:
 
-![alt text]()
+![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBreset1.png)
 
 The code writes `0` to the reset pin inside the `#initNokia` subroutine which
 hods the low value to the pin for count of 0xFFFF or 65535. Analyzing the logic 
 analyzer output shows that the reset is held down for about 146.9 ms which translates to about 2.24 us per cycle of the reset loop shown below.
 
-```assembly
+```Assembly
 	bic.b	#LCD1202_RESET_PIN, &P2OUT
 	mov	#0xFFFF, R12
 delayNokiaResetHigh:
