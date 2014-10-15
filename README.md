@@ -1,4 +1,4 @@
-## Lab 3, LCD Interfacing
+## Lab 3 LCD Interfacing
 
 #### PreLab
 
@@ -31,7 +31,7 @@ and the data packet are summarized below.
 |292(512)|Command|0001 0000|
 |298 (518)|Command|0000 0001|
 
-* Line numbers in parentheses are where the routines were called after the 
+\* Line numbers in parentheses are where the routines were called after the 
 functionlaity code had been added
 
 These four bites represet the first time the S3 button was pressed and produced 
@@ -43,12 +43,12 @@ also been incremented to 1 in the code. Below are the screenshots of the logic
 analizer output that produced these four codes.
 
 Data Write
-![alt text](https//raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBdata.png)
+![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBdata.png)
 
-Row Set
+Row Address Set
 ![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBcmd1.png)
 
-ColumnSet
+Column Address Set
 ![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBcmd2.png)
 ![alt text](https://raw.githubusercontent.com/IanGoodbody/ECE382_Lab3/master/logicOutput/GBcmd2.png)
 
@@ -66,7 +66,8 @@ analyzer readout of this section, on the scale shown above, shows a high
 by a similarly long high signal where the board is not reset. This pattern 
 matches the code in `initNokia` which has consecutive reset low then high 
 signals set to a loop. Measuring between the blip and the long high period 
-gave a period of 19.77 ms, and given 65,535 cycles of the loop, yields about 0.3 us per loop of the code segment shown below.
+gave a period of 19.77 ms, and given 65,535 cycles of the loop, yields about 
+0.3 us per loop of the code segment shown below.
 
 ```Assembly
 	bic.b	#LCD1202_RESET_PIN, &P2OUT
@@ -142,3 +143,8 @@ message length, the current implementation will work best only with 8 by 8
 images. Creating images of variable width could be acomplished by chanigg the
 parameters noted above, however images with heights other than 8 are not 
 supported by this implementation.
+
+#### Documentation
+
+Dusty Weisner helped me find the correct settings to produce a logic analyzer
+output.
